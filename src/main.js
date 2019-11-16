@@ -27,7 +27,7 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 	try {
 		// TODO: 测试环境缺省状态使用小韩的cookie
 		if (!cookies) {
-			cookies = cookiesList.reduce((total, item) => {
+			cookies = cookieList.reduce((total, item) => {
 				total += item.name + '=' + item.value + '; ';
 				return total;
 			}, '');
