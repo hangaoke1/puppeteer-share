@@ -39,7 +39,7 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 		if (!money) {
 			throw new Error('请输入面额')
 		}
-		const data = await getWxPayUrl(cookieList, mobile, money);
+		const data = await getWxPayUrl(cookie, mobile, money);
 		res.json({
 			code: 200,
 			message: '成功',
