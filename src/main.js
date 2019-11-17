@@ -32,6 +32,9 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 			throw new Error('订单号不能为空')
 		}
 		const data = await getOrderStatus(orderId, cookie)
+		if (data === -100) {
+			throw new Error('cookie已失效')
+		}
 		console.log(`SUCCESS: 话费到账查询成功-orderId:${orderId}, data: ${JSON.stringify(data)}`);
 		res.json({
 			code: 200,
@@ -39,10 +42,18 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 			data
 		})
 	} catch (err) {
-		res.json({
-			code: -1,
-			message: err.message
-		})
+		console.error('FAIL: 到账查询失败', err)
+		if (err.message === 'cookie已失效') {
+			res.json({
+				code: -100,
+				message: err.message
+			})
+		} else {
+			res.json({
+				code: -1,
+				message: err.message
+			})
+		}
 	}
 })
 
@@ -70,10 +81,17 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 		})
 	} catch (err) {
 		console.error('FAIL: 充值请求失败', err)
-		res.json({
-			code: -1,
-			message: err.message
-		})
+		if (err.message === 'cookie已失效') {
+			res.json({
+				code: -100,
+				message: err.message
+			})
+		} else {
+			res.json({
+				code: -1,
+				message: err.message
+			})
+		}
 	}
 })
 
