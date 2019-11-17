@@ -2,6 +2,7 @@ const app = require('express')()
 const bodyParser = require('body-parser')
 const getWxPayUrl = require('../lib/jd-api.js')
 const cookieList = require('../mock/cookie');
+const { filterCookie } = require('../utils/index')
 const argPort = process.argv[2]
 const port = !!argPort ? +argPort : 9580
 
@@ -32,7 +33,8 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 				return total;
 			}, '');
 		}
-		cookie = cookie.replace('csrfToken', 'csrfTokenBak')
+		// cookie = cookie.replace('csrfToken', 'csrfTokenBak')
+		cookie = filterCookie(cookie)
 		if (!mobile) {
 			throw new Error('请输入手机号')
 		}
