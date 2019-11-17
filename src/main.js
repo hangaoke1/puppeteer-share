@@ -1,7 +1,7 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
 const getWxPayUrl = require('../lib/jd-api.js')
-const cookieList = require('../mock/cookies');
+const cookieList = require('../mock/cookie');
 const argPort = process.argv[2]
 const port = !!argPort ? +argPort : 9580
 
@@ -21,18 +21,18 @@ app.use('/index', (req, res) => {
 })
 
 app.use('/mobile/getJDPhonePay', async (req, res) => {
-	let { mobile, money, cookies } = req.body;
-	console.log(`INFO: 话费充值请求-mobile:${mobile}, money:${money}, cookies: ${cookies}`);
+	let { mobile, money, cookie } = req.body;
+	console.log(`INFO: 话费充值请求-mobile:${mobile}, money:${money}, cookie: ${cookie}`);
 
 	try {
 		// TODO: 测试环境缺省状态使用小韩的cookie
-		if (!cookies) {
-			cookies = cookieList.reduce((total, item) => {
+		if (!cookie) {
+			cookie = cookieList.reduce((total, item) => {
 				total += item.name + '=' + item.value + '; ';
 				return total;
 			}, '');
 		}
-		cookies = cookies.replace('csrfToken', 'csrfTokenBak')
+		cookie = cookie.replace('csrfToken', 'csrfTokenBak')
 		if (!mobile) {
 			throw new Error('请输入手机号')
 		}
