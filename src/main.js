@@ -1,6 +1,6 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
-const getWxPayUrl = require('../lib/jd-api.js')
+const { getWxPayUrl, getOrderStatus } = require('../lib/jd-api.js')
 const cookieList = require('../mock/cookie');
 const { filterCookie } = require('../utils/index')
 const argPort = process.argv[2]
@@ -21,27 +21,48 @@ app.use('/index', (req, res) => {
 	res.render("index.html",{ title:"hello" })
 })
 
+app.use('/mobile/getJDOrderStatus', async (req, res) => {
+	let { orderId, cookie } = req.body;
+	console.log(`INFO: 话费到账请求-orderId:${orderId}, cookie: ${cookie}`);
+	try {
+		if (!cookie) {
+			throw new Error('cookie不能为空')
+		}
+		if (!orderId) {
+			throw new Error('订单号不能为空')
+		}
+		const data = await getOrderStatus(orderId, cookie)
+		console.log(`SUCCESS: 话费到账查询成功-orderId:${orderId}, data: ${JSON.stringify(data)}`);
+		res.json({
+			code: 200,
+			message: '查询成功',
+			data
+		})
+	} catch (err) {
+		res.json({
+			code: -1,
+			message: err.message
+		})
+	}
+})
+
 app.use('/mobile/getJDPhonePay', async (req, res) => {
 	let { mobile, money, cookie } = req.body;
 	console.log(`INFO: 话费充值请求-mobile:${mobile}, money:${money}, cookie: ${cookie}`);
 
 	try {
-		// TODO: 测试环境缺省状态使用小韩的cookie
 		if (!cookie) {
-			cookie = cookieList.reduce((total, item) => {
-				total += item.name + '=' + item.value + '; ';
-				return total;
-			}, '');
+			throw new Error('cookie不能为空')
 		}
-		// cookie = cookie.replace('csrfToken', 'csrfTokenBak')
-		cookie = filterCookie(cookie)
 		if (!mobile) {
-			throw new Error('请输入手机号')
+			throw new Error('手机号不能为空')
 		}
 		if (!money) {
-			throw new Error('请输入面额')
+			throw new Error('面额不能为空')
 		}
+		cookie = filterCookie(cookie)
 		const data = await getWxPayUrl(cookie, mobile, money);
+		console.log(`SUCCESS: 话费充值请求成功-mobile:${mobile}, data: ${JSON.stringify(data)}`);
 		res.json({
 			code: 200,
 			message: '成功',
