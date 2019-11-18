@@ -2,6 +2,21 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 const axios = require('axios');
 const HttpAgent = require('agentkeepalive')
 const HttpsAgent = require('agentkeepalive').HttpsAgent
+const getProxyIp = 'http://route.xiongmaodaili.com/xiongmao-web/selfControl/getIP?secret=e4af36aed444da8b0918326b680b6acb&code=0&orderNo=ZK20191117223222ZpM6q4gD&type=0'
+
+let proxyIp = '124.113.193.186'
+let proxyPort = '41823'
+
+// 5分钟轮换一次ip
+// setInterval(() => {
+//   axios.get(getProxyIp).then(res => {
+//     let data = res.data;
+//     if (data.code === '0') {
+//       proxyIp = data.obj.ip
+//       proxyPort = data.obj.port
+//     }
+//   })
+// }, 5 * 60 * 1000)
 
 const httpAgent = new HttpAgent({
   timeout: 60000,
@@ -17,8 +32,8 @@ var options = {
   httpAgent,
   httpsAgent,
   proxy: {
-    host: '180.164.96.62',
-    port: 49678
+    host: proxyIp,
+    port: proxyPort
   }
 }
 
