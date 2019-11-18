@@ -5,11 +5,11 @@ const HttpsAgent = require('agentkeepalive').HttpsAgent
 
 const httpAgent = new HttpAgent({
   timeout: 60000,
-  freeSocketKeepAliveTimeout: 30000
+  freeSocketTimeout: 30000
 })
 const httpsAgent = new HttpsAgent({
   timeout: 60000,
-  freeSocketKeepAliveTimeout: 30000
+  freeSocketTimeout: 30000
 })
 
 var options = {
