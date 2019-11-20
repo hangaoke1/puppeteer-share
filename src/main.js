@@ -28,7 +28,7 @@ app.use('/index', (req, res) => {
 
 app.use('/mobile/getJDOrderStatus', async (req, res) => {
 	let { orderId, cookie } = req.body;
-	console.log(`INFO: 话费到账请求-orderId:${orderId}, cookie: ${cookie}`);
+	console.log(`JD: 话费到账请求 orderId:${orderId}, cookie: ${cookie}`);
 	try {
 		if (!cookie) {
 			throw new Error('cookie不能为空')
@@ -40,14 +40,14 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 		if (data === -100) {
 			throw new Error('cookie已失效')
 		}
-		console.log(`SUCCESS: 话费到账查询成功-orderId:${orderId}, data: ${JSON.stringify(data)}`);
+		console.log(`JD: 话费到账查询成功 orderId:${orderId}, data: ${JSON.stringify(data)}`);
 		res.json({
 			code: 200,
 			message: '查询成功',
 			data
 		})
 	} catch (err) {
-		console.error('FAIL: 到账查询失败', err)
+		console.error('JD: 到账查询失败', err)
 		if (err.message === 'cookie已失效') {
 			res.json({
 				code: -100,
@@ -64,7 +64,7 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 
 app.use('/mobile/getJDPhonePay', async (req, res) => {
 	let { mobile, money, cookie } = req.body;
-	console.log(`INFO: 话费充值请求-mobile:${mobile}, money:${money}, cookie: ${cookie}`);
+	console.log(`JD: 话费充值请求 mobile:${mobile}, money:${money}, cookie: ${cookie}`);
 
 	try {
 		if (!cookie) {
@@ -78,14 +78,14 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 		}
 		cookie = filterCookie(cookie)
 		const data = await getWxPayUrl(cookie, mobile, money);
-		console.log(`SUCCESS: 话费充值请求成功-mobile:${mobile}, data: ${JSON.stringify(data)}`);
+		console.log(`JD: 话费充值请求成功 mobile:${mobile}, data: ${JSON.stringify(data)}`);
 		res.json({
 			code: 200,
 			message: '成功',
 			data: data
 		})
 	} catch (err) {
-		console.error(`FAIL: 充值请求失败 mobile:${mobile}, money:${money}, cookie: ${cookie}`, err)
+		console.error(`JD: 充值请求失败 mobile:${mobile}, money:${money}, cookie: ${cookie}`, err)
 		if (err.message === 'cookie已失效') {
 			res.json({
 				code: -100,
