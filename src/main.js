@@ -49,7 +49,7 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 		})
 	} catch (err) {
 		console.error(`JD: 到账查询失败 orderId:${orderId}, cookie: ${cookieOrigin}`, err)
-		if (err.message === 'cookie已失效') {
+		if (err.message === 'cookie已失效' || err.message === 'The header content contains invalid characters') {
 			res.json({
 				code: -100,
 				message: err.message
@@ -88,7 +88,7 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 		})
 	} catch (err) {
 		console.error(`JD: 充值请求失败 mobile:${mobile}, money:${money}, cookie: ${cookieOrigin}`, err)
-		if (err.message === 'cookie已失效') {
+		if (err.message === 'cookie已失效' || err.message === 'The header content contains invalid characters') {
 			res.json({
 				code: -100,
 				message: err.message
