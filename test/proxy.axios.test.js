@@ -1,22 +1,18 @@
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+// process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 const axios = require('axios');
 const HttpAgent = require('agentkeepalive')
 const HttpsAgent = require('agentkeepalive').HttpsAgent
-const getProxyIp = 'http://route.xiongmaodaili.com/xiongmao-web/selfControl/getIP?secret=e4af36aed444da8b0918326b680b6acb&code=0&orderNo=ZK20191117223222ZpM6q4gD&type=0'
 
-let proxyIp = '124.113.193.186'
-let proxyPort = '41823'
+// 要访问的目标地址
+let page_url = 'http://2000019.ip138.com/'
 
-// 5分钟轮换一次ip
-// setInterval(() => {
-//   axios.get(getProxyIp).then(res => {
-//     let data = res.data;
-//     if (data.code === '0') {
-//       proxyIp = data.obj.ip
-//       proxyPort = data.obj.port
-//     }
-//   })
-// }, 5 * 60 * 1000)
+// 隧道id和密码, 若已添加白名单则不需要添加
+const mytid = 't17421839588994';
+const password = 'ngkc3b1q';
+
+// 隧道代理服务器host/ip和端口
+let proxy_ip = 'tps136.kdlapi.com';
+let proxy_port = 15818;
 
 const httpAgent = new HttpAgent({
   timeout: 60000,
@@ -32,11 +28,15 @@ var options = {
   httpAgent,
   httpsAgent,
   proxy: {
-    host: proxyIp,
-    port: proxyPort
+    host: proxy_ip,
+    port: proxy_port,
+    auth: {
+      username: mytid,
+      password: password
+    }
   }
 }
 
-axios.get('http://2000019.ip138.com/', options).then(res => {
+axios.get(page_url, options).then(res => {
   console.log(res.data)
 });
