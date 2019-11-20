@@ -5,6 +5,11 @@ const cookieList = require('../mock/cookie');
 const { filterCookie } = require('../utils/index')
 const argPort = process.argv[2]
 const port = !!argPort ? +argPort : 9580
+const config = require('../config')
+
+if (config.log4js) {
+  require('../log4js/index')
+}
 
 app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json({limit: '2mb'}))
