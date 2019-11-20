@@ -28,6 +28,7 @@ app.use('/index', (req, res) => {
 
 app.use('/mobile/getJDOrderStatus', async (req, res) => {
 	let { orderId, cookie } = req.body;
+	let cookieOrigin = cookie;
 	console.log(`JD: 话费到账请求 orderId:${orderId}, cookie: ${cookie}`);
 	try {
 		if (!cookie) {
@@ -47,7 +48,7 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 			data
 		})
 	} catch (err) {
-		console.error('JD: 到账查询失败', err)
+		console.error(`JD: 到账查询失败 orderId:${orderId}, cookie: ${cookieOrigin}`, err)
 		if (err.message === 'cookie已失效') {
 			res.json({
 				code: -100,
@@ -64,6 +65,7 @@ app.use('/mobile/getJDOrderStatus', async (req, res) => {
 
 app.use('/mobile/getJDPhonePay', async (req, res) => {
 	let { mobile, money, cookie } = req.body;
+	let cookieOrigin = cookie;
 	console.log(`JD: 话费充值请求 mobile:${mobile}, money:${money}, cookie: ${cookie}`);
 
 	try {
@@ -85,7 +87,7 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 			data: data
 		})
 	} catch (err) {
-		console.error(`JD: 充值请求失败 mobile:${mobile}, money:${money}, cookie: ${cookie}`, err)
+		console.error(`JD: 充值请求失败 mobile:${mobile}, money:${money}, cookie: ${cookieOrigin}`, err)
 		if (err.message === 'cookie已失效') {
 			res.json({
 				code: -100,
