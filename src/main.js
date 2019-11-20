@@ -80,7 +80,7 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 			data: data
 		})
 	} catch (err) {
-		console.error('FAIL: 充值请求失败', err)
+		console.error(`FAIL: 充值请求失败 mobile:${mobile}, money:${money}, cookie: ${cookie}`, err)
 		if (err.message === 'cookie已失效') {
 			res.json({
 				code: -100,
