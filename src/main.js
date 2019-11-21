@@ -93,6 +93,11 @@ app.use('/mobile/getJDPhonePay', async (req, res) => {
 				code: -100,
 				message: err.message
 			})
+		} else if(err.message === '运营商系统升级') {
+			res.json({
+				code: -200,
+				message: err.message
+			})
 		} else {
 			res.json({
 				code: -1,
