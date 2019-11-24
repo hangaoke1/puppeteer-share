@@ -1,5 +1,10 @@
 const path = require('path')
 module.exports = {
+	kuaimi: {
+		name: '',
+		password: '',
+		sid: ''
+	},
 	log4js: {
 		pm2: true, // pm2启动服务时需要开启
 		logDir: path.resolve(__dirname, '../logs/'), // 输出文件路径

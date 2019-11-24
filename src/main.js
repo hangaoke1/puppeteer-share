@@ -1,7 +1,7 @@
 const app = require('express')()
 const bodyParser = require('body-parser')
 const argPort = process.argv[2]
-const port = !!argPort ? +argPort : 9580
+const port = !!argPort ? +argPort : 9581
 const config = require('../config')
 
 if (config.log4js) {
@@ -21,7 +21,7 @@ app.use((req, resp, next) => {
 
 app.use('/index', (req, res) => {
 	res.render("index.html",{ title:"hello" })
-})
+})	
 
 app.listen(port, () => {
     console.log('server start!')
