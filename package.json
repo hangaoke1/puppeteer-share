@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development node src/main.js",
+    "dev": "cross-env NODE_ENV=development node lib/genCookie.js",
     "start": "cross-env NODE_ENV=production node src/main.js"
   },
   "author": "",
