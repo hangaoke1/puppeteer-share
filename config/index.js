@@ -1,9 +1,13 @@
 const path = require('path')
 module.exports = {
 	kuaimi: {
-		name: '',
-		password: '',
-		sid: ''
+		url: 'http://api.caihyz.com/api/do.php',
+		name: 'testGm',
+		password: 'gmtest123',
+		sid: 2214
+	},
+	javaUrl: {
+		syncCookie: 'http://47.107.125.96:19918/save'
 	},
 	log4js: {
 		pm2: true, // pm2启动服务时需要开启
