@@ -2,7 +2,7 @@ const path = require('path')
 module.exports = {
 	// 隧道代理
 	proxy: {
-		enable: true, // 是否开启代理
+		enable: false, // 是否开启代理
 		proxy_ip: 'tps168.kdlapi.com',
 		proxy_port: 15818,
 		mytid: 't17483157176021',
