@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development node lib/genCookie.js",
+    "jd": "cross-env NODE_ENV=development node lib/genJdCookie.js",
+    "suning": "cross-env NODE_ENV=development node lib/genSuningCookie.js",
     "start": "cross-env NODE_ENV=production node src/main.js"
   },
   "author": "",
